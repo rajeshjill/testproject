@@ -109,8 +109,17 @@ router.get('/node/:id', async(req, res) => {
             if (err) {
                 res.sendStatus(403)
             } else {
-                console.log("rows->", rows);
-                res.json(rows);
+                if (rows.length == 0) {
+                    res.json({
+                        err: {
+                            msg: "Oops somthing wrong in your Api"
+                        }
+                    })
+
+                } else {
+                    console.log("rows->", rows);
+                    res.json(rows);
+                }
             }
         })
     } catch (err) {
@@ -129,7 +138,7 @@ router.put('/node/update/:id', function(req, res) {
     connection.query(queryString, [fname, lname, id], function(err, rows, fields) {
         if (err) {
             res.sendStatus(403)
-        } else {;
+        } else {
             console.log("rows->", rows);
             res.json(rows);
         }
